@@ -1,0 +1,62 @@
+server:
+  port: 8081
+spring:
+  cloud:
+    discovery:
+      enabled : true
+  main:
+    allow-bean-definition-overriding : true
+  application:
+    name: profile-service
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  jpa:
+    database-platform: org.hibernate.dialect.SQLServerDialect # i need sqlserver dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+# Eureka configuration for service discovery
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# Custom properties for employee-performance service
+employee-performance:
+  review-schedule:
+    enabled: true
+    cron-expression: "0 0 0 1 * ?"  # Run at midnight on the first day of each month
+  metrics:
+    client-satisfaction-threshold: 4.0
+    innovation-threshold: 3.5
+
+# Feign client timeout settings
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true

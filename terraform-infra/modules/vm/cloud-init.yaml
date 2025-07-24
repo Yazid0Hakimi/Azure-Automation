@@ -1,0 +1,26 @@
+#cloud-config
+package_update: true
+packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release    
+
+  # CLIENT_ID="0559557c-996f-4e33-a0dc-1914807aaf8a"
+  # CLIENT_SECRET="jx-8Q~oWm_GB~Naj-ooxkU._eMUHgDX5oOJ2AbDQ"
+  # TENANT_ID="84f1e4ea-8554-43e1-8709-f0b8589ea118"
+  # SUBSCRIPTION_ID="0cfe2870-d256-4119-b0a3-16293ac11bdc"
+  # RESOURCE_GROUP="1-912eadbf-playground-sandbox"
+  # AKS_NAME="aks-cluster"
+     
+runcmd:
+  - curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+  - sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+  - echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+  - apt-get update
+  - apt-get install -y kubectl
+  - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+  - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+  - curl -s https://fluxcd.io/install.sh | sudo bash # added for flux installation
+  - helm registry login mcr.microsoft.com --username dummy --password dummy

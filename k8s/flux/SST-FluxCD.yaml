@@ -1,0 +1,27 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: azure-devops-repo
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  url: ssh://git@ssh.dev.azure.com/v3/yazid0hakimi/gitops-terraform/k8s
+  ref:
+    branch: main
+  secretRef:
+    name: azure-devops-ssh
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: azure-devops-kustomization
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./overlays/dev  # adjust to your repo structure
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: azure-devops-repo
+  targetNamespace: default

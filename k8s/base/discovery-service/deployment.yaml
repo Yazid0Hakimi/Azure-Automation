@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discovery-deployment
+  labels:
+    app: discovery-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discovery-deployment
+  template:
+    metadata:
+      labels:
+        app: discovery-deployment
+    spec:
+      containers:
+      - name: discovery-service
+        image: aksdemoQNUmml.azurecr.io/discovery-service:latest
+        ports:
+        - containerPort: 8761
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8761
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8761
+          initialDelaySeconds: 15
+          periodSeconds: 5

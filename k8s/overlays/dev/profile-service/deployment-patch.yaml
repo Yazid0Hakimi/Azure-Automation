@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profile-deployment
+spec:
+  template:
+    spec:
+      containers:
+      - name: profile-service
+        image: aksdemoQNUmml.azurecr.io/profile-service:latest

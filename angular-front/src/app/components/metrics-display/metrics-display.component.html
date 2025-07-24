@@ -1,0 +1,79 @@
+<div class="metrics-container">
+  <h3>Performance Metrics</h3>
+
+  <div *ngIf="loading" class="loading">Loading metrics...</div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="metrics-table">
+    <table *ngIf="metrics.length > 0">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Tasks Completed</th>
+          <th>Projects Completed</th>
+          <th>Avg Task Time</th>
+          <th>Client Satisfaction</th>
+          <th>Team Collaboration</th>
+          <th>Innovation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let metric of metrics">
+          <td>{{ metric.metricDate | date }}</td>
+          <td>{{ metric.tasksCompleted || "N/A" }}</td>
+          <td>{{ metric.projectsCompleted || "N/A" }}</td>
+          <td>{{ metric.avgTaskCompletionTime || "N/A" }}</td>
+          <td>{{ metric.clientSatisfactionScore || "N/A" }}</td>
+          <td>{{ metric.teamCollaborationScore || "N/A" }}</td>
+          <td>{{ metric.innovationScore || "N/A" }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="metrics.length === 0" class="no-data">
+      No metrics available for this employee.
+    </div>
+  </div>
+</div>
+
+<style>
+.metrics-container {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+h3 {
+  color: #333;
+}
+
+.loading, .error-message, .no-data {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+.metrics-table {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+</style>

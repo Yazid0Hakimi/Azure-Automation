@@ -1,0 +1,10 @@
+kubectl delete secret azure-devops-ssh -n flux-system
+
+kubectl create secret generic azure-devops-ssh \
+  --namespace=flux-system \
+  --from-file=identity=./id_rsa \
+  --from-file=known_hosts=./azure_known_hosts
+
+
+flux reconcile source git azure-devops-repo
+flux reconcile kustomization azure-devops-kustomization

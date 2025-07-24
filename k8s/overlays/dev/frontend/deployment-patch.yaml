@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employee-portal
+spec:
+  template:
+    spec:
+      containers:
+        - name: employee-portal
+          image: aksdemoQNUmml.azurecr.io/employee-portal:latest

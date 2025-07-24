@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - ./employee-performance-service/configMap.yaml
+  - ./employee-performance-service/secret.yaml
+  - ./frontend/configMap.yaml
+  - ./profile-service/configMap.yaml
+  - ./profile-service/secret.yaml
+  - ../../HPA-PBD
+
+patches:
+  - path: ./discovery-service/deployment-patch.yaml
+  - path: ./employee-performance-service/deployment-patch.yaml
+  - path: ./gateway-service/deployment-patch.yaml
+  - path: ./profile-service/deployment-patch.yaml
+  - path: ./frontend/deployment-patch.yaml

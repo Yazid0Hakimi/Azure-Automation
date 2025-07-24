@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: angular-env
+data:
+  environment.json: |
+    {
+      "production": "true",
+      "apiGateway": "20.253.192.164",
+     "profileServiceEndpoint": "/profile-service/api",
+     "employeePerformanceServiceEndpoint": "/employee-performance-service/api"
+    }

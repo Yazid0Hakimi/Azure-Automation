@@ -1,0 +1,62 @@
+<div class="performance-container">
+  <h3>Performance Reviews</h3>
+
+  <div *ngIf="loading" class="loading">Loading performance reviews...</div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="performance-list">
+    <div *ngIf="performances.length === 0" class="no-data">
+      No performance reviews available for this employee.
+    </div>
+
+    <div *ngFor="let performance of performances" class="performance-card">
+      <div class="card-header">
+        <h4>Review Date: {{ performance.reviewDate | date }}</h4>
+        <div class="rating">
+          <span>Rating: </span>
+          <span class="stars">
+            <span
+              *ngFor="let star of [1, 2, 3, 4, 5]"
+              class="star"
+              [class.filled]="star <= performance.rating"
+              >★</span
+            >
+          </span>
+        </div>
+      </div>
+
+      <div class="reviewer">
+        <strong>Reviewer:</strong>
+        {{ performance.reviewerName || "Not specified" }}
+      </div>
+
+      <div class="review-section">
+        <h5>Comments</h5>
+        <p>{{ performance.comments || "No comments provided." }}</p>
+      </div>
+
+      <div class="review-section">
+        <h5>Strengths</h5>
+        <p>{{ performance.strengths || "No strengths specified." }}</p>
+      </div>
+
+      <div class="review-section">
+        <h5>Areas for Improvement</h5>
+        <p>
+          {{
+            performance.areasForImprovement ||
+              "No areas for improvement specified."
+          }}
+        </p>
+      </div>
+
+      <div class="review-section">
+        <h5>Goals</h5>
+        <p>{{ performance.goals || "No goals specified." }}</p>
+      </div>
+    </div>
+  </div>
+</div>

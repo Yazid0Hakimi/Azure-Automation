@@ -1,0 +1,67 @@
+<div class="employee-detail-container">
+  <div class="back-link">
+    <a routerLink="/employees">← Back to Employees</a>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading employee details...</div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error && employee" class="employee-details">
+    <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
+
+    <div class="employee-info">
+      <div class="info-section">
+        <h3>Personal Information</h3>
+        <p><strong>Email:</strong> {{ employee.email }}</p>
+        <p><strong>Phone:</strong> {{ employee.phoneNumber || "N/A" }}</p>
+        <p><strong>Address:</strong> {{ employee.address || "N/A" }}</p>
+      </div>
+
+      <div class="info-section">
+        <h3>Employment Information</h3>
+        <p><strong>ID:</strong> {{ employee.id }}</p>
+        <p><strong>Department:</strong> {{ employee.department || "N/A" }}</p>
+        <p><strong>Job Title:</strong> {{ employee.jobTitle || "N/A" }}</p>
+        <p><strong>Hire Date:</strong> {{ employee.hireDate || "N/A" }}</p>
+        <p>
+          <strong>Status:</strong> {{ employee.active ? "Active" : "Inactive" }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Tabs for Metrics and Performance -->
+    <div class="tabs">
+      <ul class="tab-headers">
+        <li
+          class="tab-header"
+          (click)="selectedTab = 'metrics'"
+          [class.active]="selectedTab === 'metrics'"
+        >
+          Metrics
+        </li>
+        <li
+          class="tab-header"
+          (click)="selectedTab = 'performance'"
+          [class.active]="selectedTab === 'performance'"
+        >
+          Performance
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div *ngIf="selectedTab === 'metrics'">
+          <app-metrics-display [employeeId]="employeeId"></app-metrics-display>
+        </div>
+
+        <div *ngIf="selectedTab === 'performance'">
+          <app-performance-display
+            [employeeId]="employeeId"
+          ></app-performance-display>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+apiVersion: 1
+providers:
+  - name: 'Spring Boot Dashboards'
+    folder: 'Spring Boot'
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards
+
+/* add kubernetes metrics as a dashboards *

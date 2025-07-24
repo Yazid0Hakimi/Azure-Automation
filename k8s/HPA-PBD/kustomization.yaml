@@ -1,0 +1,11 @@
+resources:
+ - discovery-service-HPA.yaml
+ - discovery-service-PBD.yaml
+ - employee-performance-service-HPA.yaml
+ - employee-performance-service-PBD.yaml
+ - gateway-service-HPA.yaml
+ - gateway-service-PBD.yaml
+ - profile-service-HPA.yaml 
+ - profile-service-PBD.yaml
+ - employee-portal-HPA.yaml
+ - employee-portal-PBD.yaml

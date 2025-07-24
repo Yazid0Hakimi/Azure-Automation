@@ -1,0 +1,27 @@
+# Add Helm repos
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+
+# Create namespace
+kubectl create namespace monitoring
+
+# Install Prometheus
+helm install prometheus prometheus-community/prometheus \
+  --namespace monitoring
+
+# Install Grafana with Prometheus as data source
+helm install grafana grafana/grafana \
+  --namespace monitoring \
+  -f grafana-values.yaml
+
+# Install Node Exporter
+helm install node-exporter prometheus-community/prometheus-node-exporter \
+  --namespace monitoring
+
+# Expose Prometheus and Grafana via LoadBalancer
+kubectl patch svc prometheus-server -n monitoring -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl patch svc grafana -n monitoring -p '{"spec": {"type": "LoadBalancer"}}'
+
+# Get Grafana admin password
+kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode

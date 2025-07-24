@@ -1,0 +1,48 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: angular-frontend-ingress
+  annotations:
+    appgw.ingress.kubernetes.io/backend-path-prefix: /
+    appgw.ingress.kubernetes.io/probe-path: /actuator/health
+    
+spec:
+  ingressClassName: azure-application-gateway
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: employee-portal-service
+            port:
+              number: 80
+      - path: /gateway-service/
+        pathType: Prefix
+        backend:
+          service:
+            name: gateway-service
+            port:
+              number: 8888
+      - path: /discovery-service/
+        pathType: Prefix
+        backend:
+          service:
+            name: discovery-service
+            port:
+              number: 8761
+      - path: /employee-performance-service/
+        pathType: Prefix
+        backend:
+          service:
+            name: employee-performance-service
+            port:
+              number: 8082
+      - path: /profile-service/
+        pathType: Prefix
+        backend:
+          service:
+            name: profile-service
+            port:
+              number: 8081

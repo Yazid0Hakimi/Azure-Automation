@@ -1,0 +1,30 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employee-portal
+  labels:
+    app: employee-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: employee-portal
+  template:
+    metadata:
+      labels:
+        app: employee-portal
+    spec:
+      containers:
+        - name: employee-portal
+          image: aksdemoQNUmml.azurecr.io/employee-portal:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: env-volume
+              mountPath: /usr/share/nginx/html/assets/environment.json
+              subPath: environment.json
+      volumes:
+        - name: env-volume
+          configMap:
+            name: angular-env

@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employee-performance-deployment
+spec:
+  template:
+    spec:
+      containers:
+      - name: employee-performance-service
+        image: aksdemoQNUmml.azurecr.io/employee-performance-service:latest

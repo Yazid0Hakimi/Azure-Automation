@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employee-performance-deployment
+  labels:
+    app: employee-performance-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: employee-performance-deployment
+  template:
+    metadata:
+      labels:
+        app: employee-performance-deployment
+    spec:
+      containers:
+        - name: employee-performance-service
+          image: aksdemoQNUmml.azurecr.io/employee-performance-service:latest
+          ports:
+            - containerPort: 8082
+          envFrom:
+            - configMapRef:
+                name: employee-performance-service-config
+            - secretRef:
+                name: employee-performance-service-secret
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+            initialDelaySeconds: 10
+            periodSeconds: 5

@@ -1,0 +1,40 @@
+<div class="employee-list-container">
+  <h2>Employees</h2>
+
+  <div *ngIf="loading" class="loading">Loading employees...</div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="employee-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Department</th>
+          <th>Job Title</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees">
+          <td>{{ employee.firstName }} {{ employee.lastName }}</td>
+          <td>{{ employee.email }}</td>
+          <td>{{ employee.department }}</td>
+          <td>{{ employee.jobTitle }}</td>
+          <td>
+            <button (click)="viewEmployeeDetails(employee.id)">
+              View Details
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading && !error && employees.length === 0" class="no-data">
+    No employees found.
+  </div>
+</div>

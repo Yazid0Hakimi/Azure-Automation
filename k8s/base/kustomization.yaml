@@ -1,0 +1,7 @@
+resources:
+  - frontend/
+  - discovery-service/
+  - employee-performance-service/
+  - gateway-service/
+  - profile-service/
+  - ingress.yaml

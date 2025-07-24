@@ -1,0 +1,6 @@
+{
+  "production": "true",
+  "apiGateway": "http://104.209.4.99",
+  "profileServiceEndpoint": "/profile-service/api",
+  "employeePerformanceServiceEndpoint": "/employee-performance-service/api"
+}

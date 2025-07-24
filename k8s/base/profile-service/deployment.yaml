@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profile-deployment
+  labels:
+    app: profile-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: profile-deployment
+  template:
+    metadata:
+      labels:
+        app: profile-deployment
+    spec:
+      containers:
+        - name: profile-service 
+          image: profile-service:latest
+          ports:
+            - containerPort: 8081
+          envFrom:
+            - configMapRef:
+                name: profile-service-config
+            - secretRef:
+                name: profile-service-secret
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 10
+            periodSeconds: 5
+
